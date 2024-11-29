@@ -1,29 +1,34 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
-
-
+import { UserDataContext } from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const UserLogin = () => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ userData, setUserData ] = useState({})
 
-  
-
-
+  const { user, setUser } = useContext(UserDataContext)
+  const navigate = useNavigate()
 
   const submitHandler = async (e) => {
     e.preventDefault();
-   
 
     const userData = {
-        email: email,
-        password: password
-      }
+      email: email,
+      password: password
+    }
 
-   
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
 
-  
+    if (response.status === 200) {
+      const data = response.data
+      setUser(data.user)
+
+      localStorage.setItem('token', data.token)
+      navigate('/home')
+    }
 
 
     setEmail('')
@@ -35,7 +40,9 @@ const UserLogin = () => {
       <div>
         <img className='w-16 mb-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
 
-        <form >
+        <form onSubmit={(e) => {
+          submitHandler(e)
+        }}>
           <h3 className='text-lg font-medium mb-2'>What's your email</h3>
           <input
             required
