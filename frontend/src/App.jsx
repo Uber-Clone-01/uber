@@ -9,11 +9,12 @@ import Home from './pages/Home';
 import UserProtectWrapper from './pages/UserProtectWrapper';
 import UserLogout from './pages/UserLogout';
 import CaptainHome from './pages/CaptainHome';
-import CaptainProtectWrapper from './pages/UserProtectWrapper';
+import CaptainProtectWrapper from './pages/CaptainProtectWrapper';
 import CaptainLogout from './pages/CaptainLogout';
 import Riding from './pages/Riding';
+import CaptainRiding from './pages/CaptainRiding'
+import 'remixicon/fonts/remixicon.css'
 
-import CaptainRiding from './pages/CaptainRiding';
 const App = () => {
   return (
     <div>

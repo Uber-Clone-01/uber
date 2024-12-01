@@ -1,25 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { CaptainDataContext } from '../context/CaptainContext';
 
-export const CaptainLogout = () => {
-    const token = localStorage.getItem('captain-token');
+const CaptainLogout = () => {
     const navigate = useNavigate();
+    const { setCaptain } = useContext(CaptainDataContext); // Clear captain context
 
-    axios.get(`${import.meta.env.VITE_API_URL}/captains/logout`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }).then((response) => {
-        if (response.status === 200) {
-            localStorage.removeItem('captain-token');
+    const handleLogout = async () => {
+        const token = localStorage.getItem('token'); // Use 'token' consistently
+
+        try {
+            // Send logout request to the server
+            await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/logout`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        } catch (error) {
+            console.error('Error during logout:', error.message); // Log error for debugging
+        } finally {
+            // Clear token and captain data regardless of API response
+            localStorage.removeItem('token');
+            setCaptain(null); // Reset captain context
             navigate('/captain-login');
         }
-    })
+    };
 
-    return (
-        <div>CaptainLogout</div>
-    )
-}
+    // Trigger logout on component render
+    React.useEffect(() => {
+        handleLogout();
+    }, []);
+
+    return <div>Logging out...</div>;
+};
 
 export default CaptainLogout;
