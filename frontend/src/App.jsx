@@ -12,8 +12,18 @@ import CaptainHome from './pages/CaptainHome';
 import CaptainProtectWrapper from './pages/CaptainProtectWrapper';
 import CaptainLogout from './pages/CaptainLogout';
 import Riding from './pages/Riding';
-import CaptainRiding from './pages/CaptainRiding'
+import CaptainRiding from './pages/CaptainRiding';
+import AboutUs from './pages/AboutUs';
 import 'remixicon/fonts/remixicon.css'
+import HelpCenter from './pages/HelpCenter';
+import LogOut from './pages/LogOut';
+import CaptainDashboard from './pages/CaptainDashboard';
+import ActiveRide from './pages/ActiveRide';
+import Earnings from './pages/Earnings';
+import Ratings from './pages/Ratings';
+import TripHistory from './pages/TripHistory';
+import Settings from './pages/Settings';
+import Notifications from './pages/Notifications'
 
 const App = () => {
   return (
@@ -27,6 +37,17 @@ const App = () => {
         <Route path='/signup' element={<UserSignup />} />
         <Route path='/captain-login' element={<Captainlogin />} />
         <Route path='/captain-signup' element={<CaptainSignup />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/help-center" element={<HelpCenter />} />
+        <Route path="/logout" element={<LogOut />} />
+        <Route path="/dashboard" element={<CaptainDashboard />} />
+        <Route path="/active-ride" element={<ActiveRide />} />
+        <Route path="/earnings" element={<Earnings />} />
+        <Route path="/ratings" element={<Ratings />} />
+        <Route path="/trip-history" element={<TripHistory />} />
+        <Route path="/notifications" element={<Notifications />} />
+        
+        <Route path="/settings" element={<Settings />} />
         <Route path='/home' element={
             <UserProtectWrapper>
               <Home />
