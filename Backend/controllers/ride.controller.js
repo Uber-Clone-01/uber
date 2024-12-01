@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const mapService = require('../services/maps.service');
 const { sendMessageToSocketId } = require('../socket');
 const rideModel = require('../models/ride.model');
-
+const ratingService = require('../services/rating.service');
 
 module.exports.createRide = async (req, res) => {
     const errors = validationResult(req);
@@ -127,3 +127,35 @@ module.exports.endRide = async (req, res) => {
         return res.status(500).json({ message: err.message });
     } s
 }
+
+module.exports.rateRide = async (req, res) => {
+    const { rideId, captainRating, customerRating } = req.body;
+
+    try {
+        const ride = await rideModel.findById(rideId).populate('user').populate('captain');
+        if (!ride) {
+            return res.status(404).json({ message: 'Ride not found' });
+        }
+
+        if (ride.status !== 'completed') {
+            return res.status(400).json({ message: 'Ride must be completed before rating' });
+        }
+
+        // Update ride with ratings
+        ride.rating = {
+            captain: captainRating,
+            customer: customerRating,
+        };
+        await ride.save();
+
+        // Update captain's average rating
+        await ratingService.addRating(ride.captain._id, 'captain', captainRating);
+
+        // Update customer's average rating
+        await ratingService.addRating(ride.user._id, 'customer', customerRating);
+
+        return res.status(200).json({ message: 'Ratings submitted successfully' });
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};

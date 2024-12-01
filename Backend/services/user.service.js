@@ -1,17 +1,27 @@
 const userModel = require('../models/user.model');
-module.exports.createUser = async({
-    firstname, lastname,email, password
-})=>{
-    if(!firstname|| !email || !password){
+const ratingService = require('../services/rating.service');
+
+module.exports.createUser = async ({ firstname, lastname, email, password }) => {
+    if (!firstname || !email || !password) {
         throw new Error('All fields are required');
     }
-    const user = userModel.create({
+    const user = await userModel.create({
         fullname: {
             firstname,
-            lastname
+            lastname,
         },
         email,
-        password
-    })
+        password,
+    });
     return user;
-}
+};
+
+module.exports.getCustomerProfile = async (customerId) => {
+    const customer = await userModel.findById(customerId);
+    if (!customer) {
+        throw new Error('Customer not found');
+    }
+
+    const averageRating = await ratingService.getAverageRating(customerId, 'customer');
+    return { ...customer.toObject(), averageRating };
+};

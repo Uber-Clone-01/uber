@@ -37,6 +37,14 @@ router.post('/end-ride',
     rideController.endRide
 )
 
+router.post('/rate',
+    authMiddleware.authUser, 
+    body('rideId').isMongoId().withMessage('Invalid ride id'),
+    body('captainRating').isInt({ min: 1, max: 5 }).withMessage('Captain rating must be between 1 and 5'),
+    body('customerRating').isInt({ min: 1, max: 5 }).withMessage('Customer rating must be between 1 and 5'),
+    rideController.rateRide
+);
+
 
 
 module.exports = router;

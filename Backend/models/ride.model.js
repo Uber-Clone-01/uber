@@ -45,11 +45,20 @@ const rideSchema = new mongoose.Schema({
     signature: {
         type: String,
     },
-/*    
+    
     rating: {
-        type: Number,S
-    },
-*/
+        customer: {
+            type: Number,
+            min: 1,
+            max: 5,
+        },
+        captain: {
+            type: Number,
+            min: 1,
+            max: 5,
+        }
+    },    
+
     otp: {
         type: String,
         select: false,
