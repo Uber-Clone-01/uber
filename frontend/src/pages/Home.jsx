@@ -15,6 +15,7 @@ import { UserDataContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import LiveTracking from '../components/LiveTracking';
 import { FaBars ,FaInfoCircle, FaLifeRing, FaSignOutAlt} from 'react-icons/fa';
+import { UserLogout } from './UserLogout';
 
 const Home = () => {
     const [pickup, setPickup] = useState('');
@@ -251,12 +252,10 @@ const Home = () => {
         </li>
 
 {/* Logout  */}
-<li className="mb-4 flex items-center">
-  <FaSignOutAlt className="mr-2 text-gray-700 text-2xl" />
-  <Link to="/logout" onClick={() => setMenuOpen(false)} className="text-gray-800 text-lg hover:text-gray-900 transition duration-300">
-    Logout
-  </Link>
-</li>
+        <div className="flex items-center">
+            <FaSignOutAlt className="mr-2 text-gray-700 text-2xl" />
+            <UserLogout />
+        </div>
 
                     </ul>
                 </div>

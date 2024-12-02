@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaCar, FaWallet, FaUsers, FaList, FaSignOutAlt, FaBell, FaCog, FaHome } from 'react-icons/fa';
+import CaptainLogout from './CaptainLogout';
 
 const CaptainDashboard = () => {
   const handleLogout = () => {
@@ -48,13 +49,13 @@ const CaptainDashboard = () => {
         </div>
 
         <div className="bg-white shadow-lg rounded-lg p-6">
-          <Link to="/trip-history" className="flex items-center space-x-4">
-            <FaList className="text-4xl text-purple-600" />
-            <div>
-              <h3 className="text-xl font-semibold text-gray-800">Trip History</h3>
-              <p className="text-gray-600">Review your past trips and ride details.</p>
-            </div>
-          </Link>
+            <Link to="/trip-history" className="flex items-center space-x-4">
+                <FaList className="text-4xl text-purple-600" />
+                <div>
+                    <h3 className="text-xl font-semibold text-gray-800">Trip History</h3>
+                    <p className="text-gray-600">Review your past trips and ride details.</p>
+                </div>
+            </Link>
         </div>
 
         <div className="bg-white shadow-lg rounded-lg p-6">
@@ -79,12 +80,10 @@ const CaptainDashboard = () => {
       </div>
 
       <div className="flex justify-end mt-6">
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
-          <FaSignOutAlt />
-          <span>Logout</span>
-        </button>
+      <div className="dashboard">
+            {/* Other dashboard components */}
+            <CaptainLogout />
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Start from './pages/Start';
 import UserLogin from './pages/UserLogin';
@@ -14,18 +14,30 @@ import CaptainLogout from './pages/CaptainLogout';
 import Riding from './pages/Riding';
 import CaptainRiding from './pages/CaptainRiding';
 import AboutUs from './pages/AboutUs';
-import 'remixicon/fonts/remixicon.css'
+import 'remixicon/fonts/remixicon.css';
 import HelpCenter from './pages/HelpCenter';
-import LogOut from './pages/LogOut';
 import CaptainDashboard from './pages/CaptainDashboard';
 import ActiveRide from './pages/ActiveRide';
 import Earnings from './pages/Earnings';
 import Ratings from './pages/Ratings';
 import TripHistory from './pages/TripHistory';
 import Settings from './pages/Settings';
-import Notifications from './pages/Notifications'
-
+import Notifications from './pages/Notifications';
+import ConfirmRide from './components/ConfirmRide'; 
+//function below is to store trip count
 const App = () => {
+  const [tripHistory, setTripHistory] = useState([]); 
+
+  const addTripToHistory = (trip) => {
+    setTripHistory((prevHistory) => [...prevHistory, trip]);
+  };
+
+  const deleteTripFromHistory = (index) => {
+    const updatedHistory = [...tripHistory];
+    updatedHistory.splice(index, 1);
+    setTripHistory(updatedHistory);
+  };
+
   return (
     <div>
       <Routes>
@@ -33,44 +45,49 @@ const App = () => {
         <Route path='/login' element={<UserLogin />} />
         <Route path='/riding' element={<Riding />} />
         <Route path='/captain-riding' element={<CaptainRiding />} />
-       
         <Route path='/signup' element={<UserSignup />} />
         <Route path='/captain-login' element={<Captainlogin />} />
         <Route path='/captain-signup' element={<CaptainSignup />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/help-center" element={<HelpCenter />} />
-        <Route path="/logout" element={<LogOut />} />
         <Route path="/dashboard" element={<CaptainDashboard />} />
         <Route path="/active-ride" element={<ActiveRide />} />
         <Route path="/earnings" element={<Earnings />} />
         <Route path="/ratings" element={<Ratings />} />
-        <Route path="/trip-history" element={<TripHistory />} />
+        <Route path="/trip-history" element={<TripHistory tripHistory={tripHistory} deleteTrip={deleteTripFromHistory} />} /> {/* Passing state to TripHistory */}
         <Route path="/notifications" element={<Notifications />} />
-        
         <Route path="/settings" element={<Settings />} />
+        
         <Route path='/home' element={
-            <UserProtectWrapper>
-              <Home />
-            </UserProtectWrapper>
-          } />
-          <Route path='/user/logout'element={<UserProtectWrapper>
+          <UserProtectWrapper>
+            <Home />
+          </UserProtectWrapper>
+        } />
+        <Route path='/user/logout' element={<UserProtectWrapper>
             <UserLogout />
           </UserProtectWrapper>
-          } />
-          <Route path='/captain-home' element={
-            <CaptainProtectWrapper>
-              <CaptainHome />
-            </CaptainProtectWrapper>
-           } />
-           <Route path='/captain/logout' element={
+        } />
+        <Route path='/captain-home' element={
+          <CaptainProtectWrapper>
+            <CaptainHome />
+          </CaptainProtectWrapper>
+        } />
+        <Route path='/captain/logout' element={
           <CaptainProtectWrapper>
             <CaptainLogout />
           </CaptainProtectWrapper>
         } />
 
-        </Routes>
-        </div>
-  )
+        {/* Add ConfirmRide route */}
+        <Route path="/confirm-ride" element={
+          <ConfirmRide 
+            addTripToHistory={addTripToHistory} // Pass the function to add trips
+          />
+        } />
+
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
