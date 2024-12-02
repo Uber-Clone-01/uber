@@ -31,15 +31,31 @@ const AboutUs = () => {
             <p className="text-lg text-gray-600">
               This Uber clone is designed with a robust architecture:
               <ul className="list-disc ml-5">
-                <li>
-                  <span className="font-semibold">Frontend:</span> Developed by <span className="text-blue-600" href ="https://github.com/swabhi16s">Swabhi Singh</span>, 
-                  utilizing React, Vite, and Tailwind CSS for a responsive and dynamic user interface.
-                </li>
-                <li>
-                  <span className="font-semibold">Backend:</span> Engineered by <span className="text-blue-600" href="https://github.com/santron1">Sanchay Kumar</span>, 
-                  leveraging Node.js, Express.js, and Socket.IO for efficient API handling and real-time data communication.
-                </li>
-              </ul>
+  <li>
+    <span className="font-semibold">Frontend:</span> Developed by 
+    ,<a 
+      className="text-blue-600" 
+      href="https://github.com/swabhi16s" 
+      target="_blank" 
+      rel="noopener noreferrer"
+    >
+      Swabhi Singh
+    </a> utilizing React, Vite, and Tailwind CSS for a responsive and dynamic user interface.
+  </li>
+  <li>
+    <span className="font-semibold">Backend:</span> Engineered by 
+    ,<a 
+      className="text-blue-600" 
+      href="https://github.com/santron1" 
+      target="_blank" 
+      rel="noopener noreferrer"
+    >
+      Sanchay Kumar
+    </a> leveraging Node.js, Express.js, and Socket.IO for efficient API handling and real-time data communication.
+  </li>
+</ul>
+
+
               The integration of Postman for API testing and JWT for secure authentication ensures the platform's reliability and safety.
             </p>
           </div>
