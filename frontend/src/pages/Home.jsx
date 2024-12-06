@@ -189,17 +189,22 @@ const Home = () => {
         }
     }, [waitingForDriver]);
 
+
     async function findTrip() {
-        setVehiclePanel(true);
-        setPanelOpen(false);
+        setVehiclePanel(true)
+        setPanelOpen(false)
 
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
             params: { pickup, destination },
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-        });
-        setFare(response.data);
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+
+        setFare(response.data)
+
+
     }
 
     async function createRide() {
@@ -268,11 +273,7 @@ const Home = () => {
             />
             <div className="h-screen w-screen">
                 {/* image for temporary use */}
-                <img
-                    className="w-screen h-screen object-cover"
-                    src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
-                    alt={LiveTracking}
-                />
+                <LiveTracking/>
             </div>
             <div className="flex flex-col justify-end h-screen absolute top-0 w-full">
                 <div className="h-[30%] p-6 bg-white relative">

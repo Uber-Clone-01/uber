@@ -3,9 +3,9 @@ const { validationResult } = require('express-validator');
 const mapService = require('../services/maps.service');
 const { sendMessageToSocketId } = require('../socket');
 const rideModel = require('../models/ride.model');
-const ratingService = require('../services/rating.service');
 
-module.exports.createRide = async (req, res) => {
+
+/*module.exports.createRide = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -16,9 +16,13 @@ module.exports.createRide = async (req, res) => {
     try {
         const ride = await rideService.createRide({ user: req.user._id, pickup, destination, vehicleType });
         res.status(201).json(ride);
-        const pickupCoordinates = await mapService.getAddressCoordinate(pickup);
-        const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCoordinates.ltd, pickupCoordinates.lng, 2);
 
+        const pickupCoordinates = await mapService.getAddressCoordinate(pickup);
+
+
+
+        const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCoordinates.ltd, pickupCoordinates.lng, 2);
+       // console.log(captainsInRadius);
         ride.otp = ""
 
         const rideWithUser = await rideModel.findOne({ _id: ride._id }).populate('user');
@@ -34,10 +38,44 @@ module.exports.createRide = async (req, res) => {
 
     } catch (err) {
 
-        //console.log(err);
+        console.log(err);
         return res.status(500).json({ message: err.message });
     }
 
+};
+*/
+module.exports.createRide = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { userId, pickup, destination, vehicleType } = req.body;
+
+    try {
+        const ride = await rideService.createRide({ user: req.user._id, pickup, destination, vehicleType });
+
+        const pickupCoordinates = await mapService.getAddressCoordinate(pickup);
+        
+        const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCoordinates.ltd, pickupCoordinates.lng, 2);
+        console.log(captainsInRadius)
+        const rideWithUser = await rideModel.findOne({ _id: ride._id }).populate('user');
+        ride.otp = ""; // Set OTP if required.
+
+        captainsInRadius.map((captain) => {
+            sendMessageToSocketId(captain.socketId, {
+                event: 'new-ride',
+                data: rideWithUser,
+            });
+        });
+
+        // Send response after all operations are complete.
+        return res.status(201).json(ride);
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: err.message });
+    }
 };
 
 module.exports.getFare = async (req, res) => {
@@ -127,35 +165,3 @@ module.exports.endRide = async (req, res) => {
         return res.status(500).json({ message: err.message });
     } s
 }
-
-module.exports.rateRide = async (req, res) => {
-    const { rideId, captainRating, customerRating } = req.body;
-
-    try {
-        const ride = await rideModel.findById(rideId).populate('user').populate('captain');
-        if (!ride) {
-            return res.status(404).json({ message: 'Ride not found' });
-        }
-
-        if (ride.status !== 'completed') {
-            return res.status(400).json({ message: 'Ride must be completed before rating' });
-        }
-
-        // Update ride with ratings
-        ride.rating = {
-            captain: captainRating,
-            customer: customerRating,
-        };
-        await ride.save();
-
-        // Update captain's average rating
-        await ratingService.addRating(ride.captain._id, 'captain', captainRating);
-
-        // Update customer's average rating
-        await ratingService.addRating(ride.user._id, 'customer', customerRating);
-
-        return res.status(200).json({ message: 'Ratings submitted successfully' });
-    } catch (err) {
-        return res.status(500).json({ message: err.message });
-    }
-};

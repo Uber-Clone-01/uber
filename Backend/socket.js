@@ -59,4 +59,4 @@ console.log(messageObject);
     }
 }
 
-module.exports = { initializeSocket};
+module.exports = { initializeSocket, sendMessageToSocketId };

@@ -3,6 +3,8 @@ const router = express.Router();
 const { body, query } = require('express-validator');
 const rideController = require('../controllers/ride.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
+
+
 router.post('/create',
     authMiddleware.authUser,
     body('pickup').isString().isLength({ min: 3 }).withMessage('Invalid pickup address'),
@@ -36,14 +38,6 @@ router.post('/end-ride',
     body('rideId').isMongoId().withMessage('Invalid ride id'),
     rideController.endRide
 )
-
-router.post('/rate',
-    authMiddleware.authUser, 
-    body('rideId').isMongoId().withMessage('Invalid ride id'),
-    body('captainRating').isInt({ min: 1, max: 5 }).withMessage('Captain rating must be between 1 and 5'),
-    body('customerRating').isInt({ min: 1, max: 5 }).withMessage('Customer rating must be between 1 and 5'),
-    rideController.rateRide
-);
 
 
 
