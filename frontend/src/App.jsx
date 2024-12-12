@@ -24,6 +24,7 @@ import TripHistory from './pages/TripHistory';
 import Settings from './pages/Settings';
 import Notifications from './pages/Notifications';
 import ConfirmRide from './components/ConfirmRide'; 
+import ChatBot from './components/ChatBot';
 //function below is to store trip count
 const App = () => {
   const [tripHistory, setTripHistory] = useState([]); 
@@ -84,7 +85,7 @@ const App = () => {
             addTripToHistory={addTripToHistory} // Pass the function to add trips
           />
         } />
-
+        <Route path="/chatbot" element={<ChatBot />} />
       </Routes>
     </div>
   );

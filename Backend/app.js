@@ -9,6 +9,7 @@ const userRoutes = require('./routes/user.routes');
 const captainRoutes = require('./routes/captain.routes');
 const mapsRoutes = require('./routes/maps.routes');
 const rideRoutes = require('./routes/ride.routes');
+const geminiRoutes = require('./routes/gemini.routes');
 
 connectToDb();
 app.use(cors());
@@ -23,6 +24,7 @@ app.use('/users',userRoutes);
 app.use('/captains',captainRoutes);
 app.use('/maps',mapsRoutes);
 app.use('/rides',rideRoutes);
+app.use('/bot',geminiRoutes);
 
 
 module.exports =app;
