@@ -14,7 +14,7 @@ import { useContext } from 'react';
 import { UserDataContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import LiveTracking from '../components/LiveTracking';
-import { FaBars ,FaInfoCircle, FaLifeRing, FaSignOutAlt} from 'react-icons/fa';
+import { FaBars ,FaInfoCircle, FaLifeRing, FaSignOutAlt,FaComments} from 'react-icons/fa';
 import { UserLogout } from './UserLogout';
 
 const Home = () => {
@@ -227,7 +227,7 @@ const Home = () => {
         <div className="h-screen relative overflow-hidden">
             <button
                 onClick={toggleMenu}
-                className="text-3xl text-gray-800 p-3 rounded-md absolute top-5 right-5 z-50 md:hidden"
+                className="text-3xl text-white-800 p-3 rounded-md absolute top-5 right-5 z-50 md:hidden"
                 ref={iconRef}
             >
                 <FaBars />
@@ -242,23 +242,36 @@ const Home = () => {
                     
                     <ul className="mt-6">
                     <li className="mb-4 flex items-center">
-                  <FaInfoCircle className="mr-2 text-gray-700 text-2xl" />
-                 <Link to="/about-us" onClick={() => setMenuOpen(false)} className="text-gray-800 text-lg hover:text-gray-900 transition duration-300">
+                  <FaInfoCircle className="mr-2 text-white-800 text-2xl" />
+                 <Link to="/about-us" onClick={() => setMenuOpen(false)} className="text-white-800 text-lg hover:text-gray-900 transition duration-300">
                  About Us
                   </Link>
                   </li>
 
         {/* Help Center */}
         <li className="mb-4 flex items-center">
-        <FaLifeRing className="mr-2 text-gray-700 text-2xl" />
-       <Link to="/help-center" onClick={() => setMenuOpen(false)} className="text-gray-800 text-lg hover:text-gray-900 transition duration-300">
+        <FaLifeRing className="mr-2 text-white-800 text-2xl" />
+       <Link to="/help-center" onClick={() => setMenuOpen(false)} className="text-white-800 text-lg hover:text-gray-900 transition duration-300">
          Help Center
         </Link>
         </li>
 
+        {/* Chat with Us */}
+<li className="mb-4 flex items-center">
+  <FaComments className="mr-2 text-white-800 text-2xl" />
+  <Link
+    to="/chatbot"
+    onClick={() => setMenuOpen(false)}
+    className="text-white-800 text-lg hover:text-gray-900 transition duration-300"
+  >
+    Chat with Us
+  </Link>
+</li>
+
+
 {/* Logout  */}
         <div className="flex items-center">
-            <FaSignOutAlt className="mr-2 text-gray-700 text-2xl" />
+            <FaSignOutAlt className="mr-2 text-white-800 text-2xl" />
             <UserLogout />
         </div>
 

@@ -50,7 +50,7 @@ export const UserLogout = () => {
             ) : (
                 <button
                     onClick={() => setShowConfirmation(true)}
-                    className="text-gray-800 text-lg hover:text-gray-900 transition duration-300"
+                    className="text-white-800 text-lg hover:text-gray-900 transition duration-300"
                 >
                     Logout
                 </button>

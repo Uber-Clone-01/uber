@@ -7,7 +7,7 @@ import axios from 'axios';
 const UserLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // State to handle errors
+  const [errorMessage, setErrorMessage] = useState(''); 
   const { setUser } = useContext(UserDataContext);
   const navigate = useNavigate();
 
@@ -24,10 +24,10 @@ const UserLogin = () => {
         setUser(data.user);
         localStorage.setItem('token', data.token);
         navigate('/home');
-        setErrorMessage(''); // Clear error message on successful login
+        setErrorMessage(''); 
       }
     } catch (error) {
-      // Display error message for invalid credentials
+      
       setErrorMessage('Please input a valid email or password.');
     }
 
@@ -64,7 +64,7 @@ const UserLogin = () => {
             placeholder="password"
           />
           {errorMessage && (
-          <p className="text-red-600 text-center mb-4">{errorMessage}</p> // Error message display
+          <p className="text-red-600 text-center mb-4">{errorMessage}</p> 
         )}
           <button
             className="bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base"
