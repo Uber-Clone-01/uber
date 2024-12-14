@@ -53,6 +53,7 @@ module.exports.getFare = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 }
+
 module.exports.confirmRide = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -92,7 +93,7 @@ module.exports.confirmRide = async (req, res) => {
             destination: ride.destination,
             fare: ride.fare,
             status: ride.status,
-            captainId: req.captain._id,  // Fix: Add captainId here
+            captainId: req.captain._id,
             createdAt: new Date(),
         };
 
@@ -101,7 +102,16 @@ module.exports.confirmRide = async (req, res) => {
         // Send WebSocket notification
         sendMessageToSocketId(ride.user.socketId, {
             event: 'ride-confirmed',
-            data: ride,
+            data: {
+                captain: {
+                    fullname: ride.captain.fullname,
+                    vehicle: ride.captain.vehicle,
+                },
+                pickup: ride.pickup,
+                destination: ride.destination,
+                fare: ride.fare,
+                otp: ride.otp,
+            },
         });
 
         return res.status(200).json(ride);
@@ -110,6 +120,7 @@ module.exports.confirmRide = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 };
+
 
 module.exports.getUserRideHistory = async (req, res) => {
     try {

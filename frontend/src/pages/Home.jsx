@@ -268,6 +268,7 @@ const Home = () => {
     Chat with Us
   </Link>
 </li>
+{/*
 <li className="mb-4 flex items-center">
   <FaComments className="mr-2 text-white-800 text-2xl" />
   <Link
@@ -278,7 +279,7 @@ const Home = () => {
     Current Ride
   </Link>
 </li>
-
+*/}
   
 {/* Logout  */}
         <div className="flex items-center">

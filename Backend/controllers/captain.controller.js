@@ -59,7 +59,51 @@ module.exports.loginCaptain = async (req, res, next) => {
 module.exports.getCaptainProfile = async (req, res, next) => {
     res.status(200).json({captain:req.captain});
 }
+module.exports.updateCaptainDetails = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
+    try {
+        const { currentPassword, fullname, vehicle } = req.body;
+        const captainId = req.captain._id; // From auth middleware
+        
+        const captain = await captainModel.findById(captainId).select('+password');
+        if (!captain) {
+            return res.status(404).json({ message: 'Captain not found' });
+        }
+
+        const isPasswordMatch = await captain.comparePassword(currentPassword);
+        if (!isPasswordMatch) {
+            return res.status(401).json({ message: 'Invalid current password' });
+        }
+
+        // Update captain details, excluding password
+        const updatedCaptain = await captainModel.findByIdAndUpdate(
+            captainId,
+            {
+                fullname: {
+                    firstname: fullname.firstname,
+                    lastname: fullname.lastname,
+                },
+                vehicle: {
+                    color: vehicle.color,
+                    plate: vehicle.plate,
+                    capacity: vehicle.capacity,
+                    vehicleType: vehicle.vehicleType,
+                }
+            },
+            { new: true } // Returns the updated captain document
+        );
+
+        res.status(200).json({ message: 'Captain profile updated successfully', captain: updatedCaptain });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
 module.exports.logoutCaptain = async (req, res, next) => {
     const token = req.cookies.token || req.headers.authorization?.split(' ')[ 1 ];
 

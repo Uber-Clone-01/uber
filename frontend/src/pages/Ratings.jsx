@@ -71,34 +71,92 @@ const Ratings = () => {
 };
 
 export default Ratings;*/
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-const Ratings = ({ captainId }) => {
-    const [ratings, setRatings] = useState(null);
-
-    useEffect(() => {
-        const fetchRatings = async () => {
-            try {
-                const response = await axios.get(`/ratings/${captainId}/ratings`);
-                setRatings(response.data);
-            } catch (error) {
-                console.error('Error fetching ratings:', error);
-            }
-        };
-        fetchRatings();
-    }, [captainId]);
+const Ratings = () => {
+    // Hardcoded data for display purposes
+    const captainData = {
+        name: 'Captain Jack Sparrow',
+        title: '5-Star Captain',
+        highestAchievement: 'Rated as Best Captain of the Year',
+        averageRating: 4.9,
+        ratingCount: 238,
+        userRating: 5,
+    };
 
     return (
-        <div>
-            {ratings ? (
-                <div>
-                    <p>Average Rating: {ratings.averageRating.toFixed(2)}</p>
-                    <p>Total Ratings: {ratings.ratingCount}</p>
+        <div
+            style={{
+                margin: '20px auto',
+                maxWidth: '600px',
+                padding: '20px',
+                border: '1px solid #ccc',
+                borderRadius: '10px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                fontFamily: 'Arial, sans-serif',
+                backgroundColor: '#f9f9f9',
+            }}
+        >
+            <h2
+                style={{
+                    textAlign: 'center',
+                    color: '#4CAF50',
+                    marginBottom: '10px',
+                }}
+            >
+                {captainData.title}
+            </h2>
+            <h3
+                style={{
+                    textAlign: 'center',
+                    color: '#333',
+                    fontWeight: '600',
+                }}
+            >
+                {captainData.name}
+            </h3>
+            <p
+                style={{
+                    textAlign: 'center',
+                    fontStyle: 'italic',
+                    marginBottom: '20px',
+                    color: '#666',
+                }}
+            >
+                "{captainData.highestAchievement}"
+            </p>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    alignItems: 'center',
+                    marginBottom: '20px',
+                }}
+            >
+                <div style={{ textAlign: 'center' }}>
+                    <h3 style={{ margin: 0, color: '#4CAF50' }}>{captainData.averageRating}</h3>
+                    <p style={{ margin: 0, color: '#777' }}>Avg. Rating</p>
                 </div>
-            ) : (
-                <p>No ratings available.</p>
-            )}
+                <div style={{ textAlign: 'center' }}>
+                    <h3 style={{ margin: 0, color: '#4CAF50' }}>{captainData.ratingCount}</h3>
+                    <p style={{ margin: 0, color: '#777' }}>Total Ratings</p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                    <h3 style={{ margin: 0, color: '#4CAF50' }}>{captainData.userRating}</h3>
+                    <p style={{ margin: 0, color: '#777' }}>Your Rating</p>
+                </div>
+            </div>
+            <div
+                style={{
+                    textAlign: 'center',
+                    marginTop: '10px',
+                    color: '#333',
+                    fontSize: '14px',
+                }}
+            >
+                Thank you for your feedback! Your ratings help us improve and recognize exceptional captains like{' '}
+                <strong>{captainData.name}</strong>.
+            </div>
         </div>
     );
 };

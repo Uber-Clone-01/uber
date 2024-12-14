@@ -84,51 +84,100 @@ const UserActiveRide = () => {
 export default UserActiveRide;
 */
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const UserActiveRide = ({ activeRide, onClose, onSubmitRating }) => {
-    const [rating, setRating] = useState(0);
-    const [timerExpired, setTimerExpired] = useState(false);
+const UserActiveRide = ({ userId }) => {
+    const [rideData, setRideData] = useState(null);
+    const [ratings, setRatings] = useState(null);
+    const [loadingRide, setLoadingRide] = useState(true);
+    const [loadingRatings, setLoadingRatings] = useState(true);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setTimerExpired(true);
-            if (typeof onClose === 'function') {
-                onClose();
+        const fetchActiveRide = async () => {
+            try {
+                // Fetch active ride details
+                const response = await axios.get(`/rides/${userId}/active`);
+                setRideData(response.data);
+
+                // Store ride data in local storage
+                localStorage.setItem('activeRide', JSON.stringify(response.data));
+
+                // Fetch ratings for the captain
+                if (response.data?.captain?._id) {
+                    fetchRatings(response.data.captain._id);
+                } else {
+                    console.error('Captain ID not found in active ride data');
+                }
+            } catch (error) {
+                console.error('Error fetching active ride:', error);
+            } finally {
+                setLoadingRide(false);
             }
-        }, 120000);
+        };
 
-        return () => clearTimeout(timer);
-    }, [onClose]);
+        const fetchRatings = async (captainId) => {
+            try {
+                const response = await axios.get(`/ratings/${captainId}/ratings`);
+                setRatings(response.data);
+            } catch (error) {
+                console.error('Error fetching ratings:', error);
+            } finally {
+                setLoadingRatings(false);
+            }
+        };
 
-    const submitRating = () => {
-        if (!rating) {
-            alert('Please select a rating.');
-            return;
+        // Check for ride data in local storage
+        const storedRide = localStorage.getItem('activeRide');
+        if (storedRide) {
+            const parsedRide = JSON.parse(storedRide);
+            setRideData(parsedRide);
+            if (parsedRide.captain?._id) {
+                fetchRatings(parsedRide.captain._id);
+            }
+            setLoadingRide(false);
+        } else {
+            fetchActiveRide();
         }
-        onSubmitRating(activeRide._id, activeRide.captainId, rating);
-    };
+    }, [userId]);
 
     return (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h2>Rate Your Captain</h2>
-                <p>{`Captain: ${activeRide.captainName}`}</p>
+        <div>
+            <h2>Active Ride Details</h2>
+            {loadingRide ? (
+                <p>Loading active ride details...</p>
+            ) : rideData ? (
                 <div>
-                    {[1, 2, 3, 4, 5].map((num) => (
-                        <button
-                            key={num}
-                            onClick={() => setRating(num)}
-                            className={`px-4 py-2 rounded ${rating === num ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                        >
-                            {num} ★
-                        </button>
-                    ))}
+                    <p>
+                        Captain Name: {rideData.captain?.fullname?.firstname}{' '}
+                        {rideData.captain?.fullname?.lastname || 'Not Available'}
+                    </p>
+                    <p>Pickup: {rideData.pickup}</p>
+                    <p>Destination: {rideData.destination}</p>
+                    <p>Fare: {rideData.fare} INR</p>
+                    <p>
+                        Vehicle: {rideData.captain?.vehicle?.vehicleType} -{' '}
+                        {rideData.captain?.vehicle?.color}
+                    </p>
                 </div>
-                <button onClick={submitRating} disabled={timerExpired}>
-                    Submit Rating
-                </button>
-                <button onClick={onClose}>Skip</button>
-            </div>
+            ) : (
+                <p>No active rides available.</p>
+            )}
+
+            <h2>Captain's Ratings</h2>
+            {loadingRatings ? (
+                <p>Loading captain ratings...</p>
+            ) : ratings ? (
+                <div>
+                    <p>
+                        Average Rating: {ratings.averageRating
+                            ? ratings.averageRating.toFixed(2)
+                            : 'N/A'}
+                    </p>
+                    <p>Total Ratings: {ratings.ratingCount}</p>
+                </div>
+            ) : (
+                <p>No ratings available for this captain.</p>
+            )}
         </div>
     );
 };

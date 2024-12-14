@@ -30,13 +30,8 @@ import RideDataContextProvider from './context/RideHistoryContext'; // Import Ri
 
 // function below is to store trip count
 const App = () => {
-  const [activeRide, setActiveRide] = useState(null);  // Example state for active ride
-  const [showModal, setShowModal] = useState(false);
-
-  const handleClose = () => {
-    setShowModal(false);
-  };
-  const [tripHistory, setTripHistory] = useState([]); 
+  const [activeRide, setActiveRide] = useState(null); // Example state for active ride
+  const [tripHistory, setTripHistory] = useState([]); // Store trip history
 
   const addTripToHistory = (trip) => {
     setTripHistory((prevHistory) => [...prevHistory, trip]);
@@ -63,13 +58,13 @@ const App = () => {
           <Route path="/help-center" element={<HelpCenter />} />
           <Route path="/dashboard" element={<CaptainDashboard />} />
           <Route path="/active-ride" element={<ActiveRide />} />
-        {/*  <Route path="/user-active-ride" element={<UserActiveRide />} /> */}
           <Route
             path="/user-active-ride"
-            element={<UserActiveRide activeRide={activeRide} onClose={handleClose} />}/>
+            element={<UserActiveRide activeRide={activeRide} />}
+          />
           <Route path="/earnings" element={<Earnings />} />
           <Route path="/ratings" element={<Ratings />} />
-          <Route path="/trip-history" element={<TripHistory />} /> {/* Passing state to TripHistory */}
+          <Route path="/trip-history" element={<TripHistory tripHistory={tripHistory} />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/settings" element={<Settings />} />
 
@@ -78,9 +73,10 @@ const App = () => {
               <Home />
             </UserProtectWrapper>
           } />
-          <Route path='/user/logout' element={<UserProtectWrapper>
-            <UserLogout />
-          </UserProtectWrapper>
+          <Route path='/user/logout' element={
+            <UserProtectWrapper>
+              <UserLogout />
+            </UserProtectWrapper>
           } />
           <Route path='/captain-home' element={
             <CaptainProtectWrapper>
@@ -95,15 +91,13 @@ const App = () => {
 
           {/* Add ConfirmRide route */}
           <Route path="/confirm-ride" element={
-            <ConfirmRide 
-              addTripToHistory={addTripToHistory} // Pass the function to add trips
-            />
+            <ConfirmRide addTripToHistory={addTripToHistory} />
           } />
           <Route path="/chatbot" element={<ChatBot />} />
         </Routes>
       </div>
     </RideDataContextProvider>
   );
-}
+};
 
 export default App;

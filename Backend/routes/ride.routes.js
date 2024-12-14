@@ -28,47 +28,7 @@ router.get('/user-ride-history',
 router.post('/confirm', 
         authMiddleware.authCaptain, 
         rideController.confirmRide);
-/*router.post('/confirm', async (req, res) => {
-    try {
-        const { rideId, userId } = req.body; // Adjust based on your frontend payload
 
-        // Validate input
-        if (!rideId || !userId) {
-            return res.status(400).json({ message: 'Ride ID and User ID are required' });
-        }
-
-        // Fetch the ride
-        const ride = await Ride.findById(rideId);
-        if (!ride) {
-            return res.status(404).json({ message: 'Ride not found' });
-        }
-
-        // Confirm the ride
-        ride.confirmed = true;
-        ride.confirmedBy = userId;
-        await ride.save();
-
-        res.status(200).json({ message: 'Ride confirmed successfully', ride });
-    } catch (error) {
-        console.error('Error confirming ride:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
-*/
-
-
-
-
-// router.post('/confirm',
-//     authMiddleware.authCaptain,
-//     body('rideId').isMongoId().withMessage('Invalid ride id'),
-//     rideController.confirmRide
-// );
-
-// router.get('/user-ride-history', 
-//     authMiddleware.authUser, 
-//     rideController.getUserRideHistory
-// );
 
 router.get('/start-ride',
     authMiddleware.authCaptain,
