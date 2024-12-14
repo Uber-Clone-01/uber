@@ -4,7 +4,8 @@ const { body, query } = require('express-validator');
 const rideController = require('../controllers/ride.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
 
-
+//const deleteRideHistory  = require('../controllers/ride.controller');
+//const { getRideHistory, deleteRide } = require('../controllers/ride.controller');
 router.post('/create',
     authMiddleware.authUser,
     body('pickup').isString().isLength({ min: 3 }).withMessage('Invalid pickup address'),
@@ -20,11 +21,54 @@ router.get('/get-fare',
     rideController.getFare
 )
 
-router.post('/confirm',
-    authMiddleware.authCaptain,
-    body('rideId').isMongoId().withMessage('Invalid ride id'),
-    rideController.confirmRide
-)
+router.get('/user-ride-history', 
+        authMiddleware.authUser, 
+        rideController.getUserRideHistory);
+
+router.post('/confirm', 
+        authMiddleware.authCaptain, 
+        rideController.confirmRide);
+/*router.post('/confirm', async (req, res) => {
+    try {
+        const { rideId, userId } = req.body; // Adjust based on your frontend payload
+
+        // Validate input
+        if (!rideId || !userId) {
+            return res.status(400).json({ message: 'Ride ID and User ID are required' });
+        }
+
+        // Fetch the ride
+        const ride = await Ride.findById(rideId);
+        if (!ride) {
+            return res.status(404).json({ message: 'Ride not found' });
+        }
+
+        // Confirm the ride
+        ride.confirmed = true;
+        ride.confirmedBy = userId;
+        await ride.save();
+
+        res.status(200).json({ message: 'Ride confirmed successfully', ride });
+    } catch (error) {
+        console.error('Error confirming ride:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+*/
+
+
+
+
+// router.post('/confirm',
+//     authMiddleware.authCaptain,
+//     body('rideId').isMongoId().withMessage('Invalid ride id'),
+//     rideController.confirmRide
+// );
+
+// router.get('/user-ride-history', 
+//     authMiddleware.authUser, 
+//     rideController.getUserRideHistory
+// );
 
 router.get('/start-ride',
     authMiddleware.authCaptain,
@@ -38,7 +82,16 @@ router.post('/end-ride',
     body('rideId').isMongoId().withMessage('Invalid ride id'),
     rideController.endRide
 )
-
+router.delete('/ride-history/:id', authMiddleware.authCaptain, async (req, res) => {
+    try {
+        const { id } = req.params;
+        await RideHistory.findByIdAndDelete(id);
+        res.status(200).json({ message: 'Ride deleted successfully.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error deleting ride.' });
+    }
+});
 
 
 module.exports = router;

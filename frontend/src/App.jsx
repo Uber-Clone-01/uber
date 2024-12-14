@@ -18,15 +18,24 @@ import 'remixicon/fonts/remixicon.css';
 import HelpCenter from './pages/HelpCenter';
 import CaptainDashboard from './pages/CaptainDashboard';
 import ActiveRide from './pages/ActiveRide';
+import UserActiveRide from './pages/UserActiveRide';
 import Earnings from './pages/Earnings';
 import Ratings from './pages/Ratings';
 import TripHistory from './pages/TripHistory';
 import Settings from './pages/Settings';
 import Notifications from './pages/Notifications';
-import ConfirmRide from './components/ConfirmRide'; 
+import ConfirmRide from './components/ConfirmRide';
 import ChatBot from './components/ChatBot';
-//function below is to store trip count
+import RideDataContextProvider from './context/RideHistoryContext'; // Import RideDataContextProvider
+
+// function below is to store trip count
 const App = () => {
+  const [activeRide, setActiveRide] = useState(null);  // Example state for active ride
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
   const [tripHistory, setTripHistory] = useState([]); 
 
   const addTripToHistory = (trip) => {
@@ -40,54 +49,60 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Start />} />
-        <Route path='/login' element={<UserLogin />} />
-        <Route path='/riding' element={<Riding />} />
-        <Route path='/captain-riding' element={<CaptainRiding />} />
-        <Route path='/signup' element={<UserSignup />} />
-        <Route path='/captain-login' element={<Captainlogin />} />
-        <Route path='/captain-signup' element={<CaptainSignup />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/help-center" element={<HelpCenter />} />
-        <Route path="/dashboard" element={<CaptainDashboard />} />
-        <Route path="/active-ride" element={<ActiveRide />} />
-        <Route path="/earnings" element={<Earnings />} />
-        <Route path="/ratings" element={<Ratings />} />
-        <Route path="/trip-history" element={<TripHistory tripHistory={tripHistory} deleteTrip={deleteTripFromHistory} />} /> {/* Passing state to TripHistory */}
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/settings" element={<Settings />} />
-        
-        <Route path='/home' element={
-          <UserProtectWrapper>
-            <Home />
-          </UserProtectWrapper>
-        } />
-        <Route path='/user/logout' element={<UserProtectWrapper>
+    <RideDataContextProvider> {/* Wrap your app with RideDataContextProvider */}
+      <div>
+        <Routes>
+          <Route path="/" element={<Start />} />
+          <Route path='/login' element={<UserLogin />} />
+          <Route path='/riding' element={<Riding />} />
+          <Route path='/captain-riding' element={<CaptainRiding />} />
+          <Route path='/signup' element={<UserSignup />} />
+          <Route path='/captain-login' element={<Captainlogin />} />
+          <Route path='/captain-signup' element={<CaptainSignup />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/help-center" element={<HelpCenter />} />
+          <Route path="/dashboard" element={<CaptainDashboard />} />
+          <Route path="/active-ride" element={<ActiveRide />} />
+        {/*  <Route path="/user-active-ride" element={<UserActiveRide />} /> */}
+          <Route
+            path="/user-active-ride"
+            element={<UserActiveRide activeRide={activeRide} onClose={handleClose} />}/>
+          <Route path="/earnings" element={<Earnings />} />
+          <Route path="/ratings" element={<Ratings />} />
+          <Route path="/trip-history" element={<TripHistory />} /> {/* Passing state to TripHistory */}
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/settings" element={<Settings />} />
+
+          <Route path='/home' element={
+            <UserProtectWrapper>
+              <Home />
+            </UserProtectWrapper>
+          } />
+          <Route path='/user/logout' element={<UserProtectWrapper>
             <UserLogout />
           </UserProtectWrapper>
-        } />
-        <Route path='/captain-home' element={
-          <CaptainProtectWrapper>
-            <CaptainHome />
-          </CaptainProtectWrapper>
-        } />
-        <Route path='/captain/logout' element={
-          <CaptainProtectWrapper>
-            <CaptainLogout />
-          </CaptainProtectWrapper>
-        } />
+          } />
+          <Route path='/captain-home' element={
+            <CaptainProtectWrapper>
+              <CaptainHome />
+            </CaptainProtectWrapper>
+          } />
+          <Route path='/captain/logout' element={
+            <CaptainProtectWrapper>
+              <CaptainLogout />
+            </CaptainProtectWrapper>
+          } />
 
-        {/* Add ConfirmRide route */}
-        <Route path="/confirm-ride" element={
-          <ConfirmRide 
-            addTripToHistory={addTripToHistory} // Pass the function to add trips
-          />
-        } />
-        <Route path="/chatbot" element={<ChatBot />} />
-      </Routes>
-    </div>
+          {/* Add ConfirmRide route */}
+          <Route path="/confirm-ride" element={
+            <ConfirmRide 
+              addTripToHistory={addTripToHistory} // Pass the function to add trips
+            />
+          } />
+          <Route path="/chatbot" element={<ChatBot />} />
+        </Routes>
+      </div>
+    </RideDataContextProvider>
   );
 }
 

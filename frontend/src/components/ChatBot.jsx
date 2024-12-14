@@ -6,14 +6,35 @@ import { Link } from 'react-router-dom';
 
 const ChatBot = () => {
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Hi! How can I help You?' },
+    { sender: 'bot', text: 'Hi! How can I help you?' },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const chatBoxRef = useRef(null);
 
+  // Scroll to the bottom of the chat
+  const scrollToBottom = () => {
+    chatBoxRef.current?.scrollTo({
+      top: chatBoxRef.current.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const formatMessageText = (text) => {
+    // Replace markdown-like symbols with proper formatting
+    const boldPattern = /\*\*(.*?)\*\*/g; // Bold **text**
+    const italicPattern = /\*(.*?)\*/g; // Italic *text*
+    return text
+      .replace(boldPattern, '<b>$1</b>')
+      .replace(italicPattern, '<i>$1</i>');
+  };
+
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (!input.trim()) return; // Prevent empty messages
 
     const userMessage = { sender: 'user', text: input };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
@@ -21,10 +42,12 @@ const ChatBot = () => {
     setLoading(true);
 
     try {
+      // Send input to backend
       const response = await axios.post('http://localhost:4000/bot/bot-res', {
         prompt: input,
       });
 
+      // Add bot response to chat
       const botMessage = {
         sender: 'bot',
         text: response.data.response || 'Sorry, no valid response received.',
@@ -32,6 +55,7 @@ const ChatBot = () => {
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
+
       const errorMessage = {
         sender: 'bot',
         text: 'Sorry, I encountered an error. Please try again later.',
@@ -41,13 +65,6 @@ const ChatBot = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    chatBoxRef.current?.scrollTo({
-      top: chatBoxRef.current.scrollHeight,
-      behavior: 'smooth',
-    });
-  }, [messages]);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br from-indigo-500 via-blue-500">
@@ -59,6 +76,7 @@ const ChatBot = () => {
           </Link>
         </div>
 
+        {/* Chat Box */}
         <div
           className="flex-1 overflow-y-auto p-4 bg-gray-100"
           ref={chatBoxRef}
@@ -84,9 +102,10 @@ const ChatBot = () => {
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-300 text-gray-900'
                 }`}
-              >
-                {message.text}
-              </div>
+                dangerouslySetInnerHTML={{
+                  __html: formatMessageText(message.text),
+                }}
+              ></div>
             </div>
           ))}
           {loading && (
@@ -99,6 +118,7 @@ const ChatBot = () => {
           )}
         </div>
 
+        {/* Input Section */}
         <div className="flex items-center p-4 bg-white border-t">
           <input
             type="text"
@@ -122,9 +142,3 @@ const ChatBot = () => {
 };
 
 export default ChatBot;
-
-
-
-
-
-

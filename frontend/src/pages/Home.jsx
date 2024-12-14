@@ -17,6 +17,7 @@ import LiveTracking from '../components/LiveTracking';
 import { FaBars ,FaInfoCircle, FaLifeRing, FaSignOutAlt,FaComments} from 'react-icons/fa';
 import { UserLogout } from './UserLogout';
 
+
 const Home = () => {
     const [pickup, setPickup] = useState('');
     const [destination, setDestination] = useState('');
@@ -267,8 +268,18 @@ const Home = () => {
     Chat with Us
   </Link>
 </li>
+<li className="mb-4 flex items-center">
+  <FaComments className="mr-2 text-white-800 text-2xl" />
+  <Link
+    to="/user-active-ride"
+    onClick={() => setMenuOpen(false)}
+    className="text-white-800 text-lg hover:text-gray-900 transition duration-300"
+  >
+    Current Ride
+  </Link>
+</li>
 
-
+  
 {/* Logout  */}
         <div className="flex items-center">
             <FaSignOutAlt className="mr-2 text-white-800 text-2xl" />

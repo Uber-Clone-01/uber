@@ -10,6 +10,7 @@ const captainRoutes = require('./routes/captain.routes');
 const mapsRoutes = require('./routes/maps.routes');
 const rideRoutes = require('./routes/ride.routes');
 const geminiRoutes = require('./routes/gemini.routes');
+const ratingRoutes = require('./routes/rating.routes');
 
 connectToDb();
 app.use(cors());
@@ -25,6 +26,6 @@ app.use('/captains',captainRoutes);
 app.use('/maps',mapsRoutes);
 app.use('/rides',rideRoutes);
 app.use('/bot',geminiRoutes);
-
+app.use('/ratings', ratingRoutes);
 
 module.exports =app;
