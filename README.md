@@ -73,7 +73,7 @@ Ensure you have the following installed on your machine:
    - Create a `.env` file in the `frontend` directory.
    - Add the following:
      ```env
-     VITE_BASE_URL=http://localhost:5000
+     VITE_BASE_URL=http://localhost:4000
      ```
 
 4. **Start the development servers:**
