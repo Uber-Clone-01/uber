@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { FaHome } from "react-icons/fa"; // Import Home icon from react-icons
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const Settings = () => {
   const [captainData, setCaptainData] = useState(null);
@@ -6,6 +8,7 @@ const Settings = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const [formData, setFormData] = useState({
     firstname: "",
@@ -15,7 +18,7 @@ const Settings = () => {
     vehicleType: "",
     vehiclePlate: "",
     vehicleCapacity: "",
-    currentPassword: "", 
+    currentPassword: "",
   });
 
   useEffect(() => {
@@ -51,7 +54,7 @@ const Settings = () => {
             vehicleType: data.captain.vehicle.vehicleType,
             vehiclePlate: data.captain.vehicle.plate,
             vehicleCapacity: data.captain.vehicle.capacity,
-            currentPassword: "", 
+            currentPassword: "",
           });
         } else {
           setError("No captain data returned.");
@@ -78,6 +81,7 @@ const Settings = () => {
     e.preventDefault();
     setSuccessMessage(null);
     setError(null);
+    setIsUpdating(true);
 
     try {
       const token = localStorage.getItem("token");
@@ -94,7 +98,7 @@ const Settings = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          currentPassword: formData.currentPassword, 
+          currentPassword: formData.currentPassword,
           fullname: {
             firstname: formData.firstname,
             lastname: formData.lastname,
@@ -119,91 +123,127 @@ const Settings = () => {
       setIsEditing(false);
     } catch (err) {
       setError(`Error updating details: ${err.message}`);
+    } finally {
+      setIsUpdating(false);
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-gray-600">Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="text-center text-red-500">{error}</div>;
   }
 
   return (
-    <div>
-      <h1>Settings</h1>
-      {successMessage && <div className="success">{successMessage}</div>}
-      {error && <div className="error">{error}</div>}
-      <form onSubmit={handleFormSubmit}>
-        <div>
-          <label>First Name:</label>
-          <input
-            type="text"
-            name="firstname"
-            value={formData.firstname}
-            onChange={handleInputChange}
-          />
+    <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg mt-10 relative">
+      {/* Home button with Link and icon */}
+      <Link
+  to="/captain-home" // Using the Link component to navigate to Captain's home
+  className="absolute top-5 right-5 flex items-center space-x-2 text-gray-800 hover:text-blue-600"
+>
+  <FaHome className="text-3xl" />
+
+</Link>
+
+
+      <h1 className="text-3xl font-semibold text-gray-800 mb-6">Settings</h1>
+      {successMessage && <div className="text-green-500 mb-4">{successMessage}</div>}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
+      <form onSubmit={handleFormSubmit} className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="col-span-1">
+            <label className="block text-sm font-medium text-gray-700">First Name</label>
+            <input
+              type="text"
+              name="firstname"
+              value={formData.firstname}
+              onChange={handleInputChange}
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3"
+            />
+          </div>
+          <div className="col-span-1">
+            <label className="block text-sm font-medium text-gray-700">Last Name</label>
+            <input
+              type="text"
+              name="lastname"
+              value={formData.lastname}
+              onChange={handleInputChange}
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3"
+            />
+          </div>
         </div>
-        <div>
-          <label>Last Name:</label>
-          <input
-            type="text"
-            name="lastname"
-            value={formData.lastname}
-            onChange={handleInputChange}
-          />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="col-span-1">
+            <label className="block text-sm font-medium text-gray-700">Vehicle Color</label>
+            <input
+              type="text"
+              name="vehicleColor"
+              value={formData.vehicleColor}
+              onChange={handleInputChange}
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3"
+            />
+          </div>
+          <div className="col-span-1">
+            <label className="block text-sm font-medium text-gray-700">Vehicle Type</label>
+            <input
+              type="text"
+              name="vehicleType"
+              value={formData.vehicleType}
+              onChange={handleInputChange}
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3"
+            />
+          </div>
         </div>
-        <div>
-          <label>Vehicle Color:</label>
-          <input
-            type="text"
-            name="vehicleColor"
-            value={formData.vehicleColor}
-            onChange={handleInputChange}
-          />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="col-span-1">
+            <label className="block text-sm font-medium text-gray-700">Vehicle Plate</label>
+            <input
+              type="text"
+              name="vehiclePlate"
+              value={formData.vehiclePlate}
+              onChange={handleInputChange}
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3"
+            />
+          </div>
+          <div className="col-span-1">
+            <label className="block text-sm font-medium text-gray-700">Vehicle Capacity</label>
+            <input
+              type="number"
+              name="vehicleCapacity"
+              value={formData.vehicleCapacity}
+              onChange={handleInputChange}
+              className="mt-1 block w-full rounded-lg border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3"
+            />
+          </div>
         </div>
+
         <div>
-          <label>Vehicle Type:</label>
-          <input
-            type="text"
-            name="vehicleType"
-            value={formData.vehicleType}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label>Vehicle Plate:</label>
-          <input
-            type="text"
-            name="vehiclePlate"
-            value={formData.vehiclePlate}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label>Vehicle Capacity:</label>
-          <input
-            type="number"
-            name="vehicleCapacity"
-            value={formData.vehicleCapacity}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label>Current Password:</label>
+          <label className="block text-sm font-medium text-gray-700">Current Password</label>
           <input
             type="password"
             name="currentPassword"
             value={formData.currentPassword}
             onChange={handleInputChange}
             required
+            className="mt-1 block w-full rounded-lg border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3"
           />
         </div>
-        <button type="submit">Update Details</button>
+
+        <button
+          type="submit"
+          className={`w-full py-3 px-6 text-white font-medium rounded-lg shadow-md ${isUpdating ? "bg-gray-400" : "bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500"}`}
+          disabled={isUpdating}
+        >
+          {isUpdating ? "Updating..." : "Update Details"}
+        </button>
       </form>
     </div>
   );
 };
 
 export default Settings;
+

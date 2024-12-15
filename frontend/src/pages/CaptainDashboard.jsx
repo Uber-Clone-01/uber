@@ -13,7 +13,7 @@ const CaptainDashboard = () => {
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-3xl font-semibold text-gray-800">Dashboard</h3>
         <Link to="/captain-home" className="text-2xl text-gray-800 hover:text-blue-600">
-          <FaHome />
+          <FaHome className="text-3xl" />
         </Link>
       </div>
 

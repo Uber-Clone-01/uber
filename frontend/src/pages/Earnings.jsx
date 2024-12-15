@@ -1,6 +1,8 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { useRideData } from '../context/RideHistoryContext';
+import { FaTachometerAlt } from 'react-icons/fa'; // Importing the Dashboard icon from react-icons
+import { Link } from 'react-router-dom'; // Importing Link for navigation
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -40,6 +42,21 @@ const Earnings = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
+            {/* Dashboard icon */}
+            <Link
+                to="/dashboard" // Link to the Captain's Dashboard page
+                style={{
+                    position: 'absolute',
+                    top: '20px',
+                    right: '20px',
+                    color: 'black',
+                    fontSize: '24px',
+                    textDecoration: 'none',
+                }}
+            >
+                <FaTachometerAlt className="text-3xl" />
+            </Link>
+
             <h2 className="text-3xl font-semibold text-gray-800">
                 Total Earnings: ₹{totalEarnings}
             </h2>
@@ -51,4 +68,5 @@ const Earnings = () => {
 };
 
 export default Earnings;
+
 

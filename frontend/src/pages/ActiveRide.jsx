@@ -14,7 +14,7 @@ const ActiveRide = () => {
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-semibold text-gray-800">Active Ride</h2>
                 <Link to="/dashboard" className="text-xl text-gray-800 hover:text-blue-800 ml-auto">
-                    <FaTachometerAlt className="inline-block mr-2" />
+                    <FaTachometerAlt className="inline-block mr-2 text-3xl" />
                 </Link>
             </div>
 

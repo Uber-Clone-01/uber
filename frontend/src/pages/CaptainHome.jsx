@@ -118,7 +118,7 @@ const CaptainHome = () => {
                     <i className='text-lg font-medium ri-logout-box-r-line'></i>
                 </Link>
                 <Link to='/dashboard' className='text-xl text-gray-800 hover:text-blue-800'>
-                    <FaTachometerAlt className='inline-block mr-2' />
+                    <FaTachometerAlt className='inline-block mr-2 text-3xl' />
                 </Link>
             </div>
             <div className='h-3/5'>

@@ -72,6 +72,8 @@ const Ratings = () => {
 
 export default Ratings;*/
 import React from 'react';
+import { FaTachometerAlt } from 'react-icons/fa'; // Importing the Dashboard icon from react-icons
+import { Link } from 'react-router-dom'; // Importing Link for navigation
 
 const Ratings = () => {
     // Hardcoded data for display purposes
@@ -95,8 +97,24 @@ const Ratings = () => {
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                 fontFamily: 'Arial, sans-serif',
                 backgroundColor: '#f9f9f9',
+                position: 'relative', // Make sure the position is relative to place the icon in the top-right
             }}
         >
+            {/* Dashboard icon */}
+            <Link
+                to="/dashboard" // Link to the Captain's Dashboard page
+                style={{
+                    position: 'absolute',
+                    top: '20px',
+                    right: '20px',
+                    color: 'black',
+                    fontSize: '24px',
+                    textDecoration: 'none',
+                }}
+            >
+                <FaTachometerAlt className="text-3xl" />
+            </Link>
+
             <h2
                 style={{
                     textAlign: 'center',

@@ -5,6 +5,7 @@ import { SocketContext } from '../context/socketContext'
 import { useNavigate } from 'react-router-dom'
 import LiveTracking from '../components/LiveTracking'
 
+
 const Riding = () => {
     const location = useLocation()
     const { ride } = location.state || {} // Retrieve ride data
@@ -56,6 +57,7 @@ const Riding = () => {
                     </div>
                 </div>
                 <button className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'>Make a Payment</button>
+                <button className='w-full mt-5 bg-red-600 text-white font-semibold p-2 rounded-lg' onClick={() => navigate('/home')} >Cancel</button>
             </div>
         </div>
     )

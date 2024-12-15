@@ -11,7 +11,7 @@ const TripHistory = () => {
             <div className="flex justify-between items-center mb-8">
                 <h2 className="text-4xl font-bold text-gray-800">Ride History</h2>
                 <Link to="/dashboard" className="text-2xl text-gray-800 hover:text-blue-600 transition duration-200">
-                    <FaTachometerAlt className="inline-block mr-2" />
+                    <FaTachometerAlt className="inline-block mr-2 text-3xl" />
                 </Link>
             </div>
             <div className="bg-white shadow-lg rounded-lg p-8 mt-6">
