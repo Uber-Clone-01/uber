@@ -8,7 +8,7 @@ export const UserLogout = () => {
     const handleLogout = async () => {
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.get("https://uber-clone-backend-t531.onrender.com/users/logout", {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/logout`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

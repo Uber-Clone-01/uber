@@ -62,7 +62,7 @@ const Home = () => {
     const handlePickupChange = async (e) => {
         setPickup(e.target.value);
         try {
-            const response = await axios.get("https://uber-clone-backend-t531.onrender.com/maps/get-suggestions", {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
                 params: { input: e.target.value },
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -77,7 +77,7 @@ const Home = () => {
     const handleDestinationChange = async (e) => {
         setDestination(e.target.value);
         try {
-            const response = await axios.get("https://uber-clone-backend-t531.onrender.com/maps/get-suggestions", {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
                 params: { input: e.target.value },
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -195,7 +195,7 @@ const Home = () => {
         setVehiclePanel(true)
         setPanelOpen(false)
 
-        const response = await axios.get("https://uber-clone-backend-t531.onrender.com/rides/get-fare", {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
             params: { pickup, destination },
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -210,7 +210,7 @@ const Home = () => {
 
     async function createRide() {
         const response = await axios.post(
-            "https://uber-clone-backend-t531.onrender.com/rides/create",
+            `${import.meta.env.VITE_BASE_URL}/rides/create`,
             {
                 pickup,
                 destination,

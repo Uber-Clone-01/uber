@@ -31,7 +31,7 @@ const Settings = () => {
           return;
         }
 
-        const response = await fetch("https://uber-clone-backend-t531.onrender.com/captains/profile", {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/captains/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -91,7 +91,7 @@ const Settings = () => {
         return;
       }
 
-      const response = await fetch("https://uber-clone-backend-t531.onrender.com/captains/update", {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/captains/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

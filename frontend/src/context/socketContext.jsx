@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 
 export const SocketContext = createContext();
 
-const socket = io("https://uber-clone-backend-t531.onrender.com"); 
+const socket = io(`${import.meta.env.VITE_BASE_URL}`); 
 
 const SocketProvider = ({ children }) => {
     useEffect(() => {
