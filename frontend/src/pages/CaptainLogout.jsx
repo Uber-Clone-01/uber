@@ -13,7 +13,7 @@ const CaptainLogout = () => {
 
         try {
             // Send logout request to the server
-            await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/logout`, {
+            await axios.get("https://uber-clone-backend-t531.onrender.com/captains/logout", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

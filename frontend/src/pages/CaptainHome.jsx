@@ -56,7 +56,7 @@ const CaptainHome = () => {
 
     async function confirmRide() {
         await axios.post(
-            `${import.meta.env.VITE_BASE_URL}/rides/confirm`,
+            "https://uber-clone-backend-t531.onrender.com/rides/confirm",
             {
 
                 rideId: ride._id,

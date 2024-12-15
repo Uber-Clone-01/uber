@@ -32,7 +32,7 @@ const ChatBotPopup = () => {
 
         try {
             // Send user message to the backend and get bot response
-            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/bot/bot-res`, {
+            const response = await axios.post("https://uber-clone-backend-t531.onrender.com/bot/bot-res", {
                 prompt: inputMessage,
             });
 

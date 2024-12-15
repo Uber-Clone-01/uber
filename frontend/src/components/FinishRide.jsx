@@ -9,7 +9,7 @@ const FinishRide = (props) => {
 
     // Handle the logic when the ride is finished
     const handleEndRide = async () => {
-        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`, {
+        const response = await axios.post("https://uber-clone-backend-t531.onrender.com/rides/end-ride", {
             rideId: props.ride._id
         }, {
             headers: {

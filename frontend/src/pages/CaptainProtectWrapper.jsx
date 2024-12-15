@@ -18,7 +18,7 @@ const CaptainProtectWrapper = ({ children }) => {
         // Fetch captain profile only if token exists
         const fetchCaptainProfile = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/profile`, {
+                const response = await axios.get("https://uber-clone-backend-t531.onrender.com/captains/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
