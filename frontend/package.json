@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "vite",               // Starts the development server
+    "build": "vite build",       // Builds the frontend for production
+    "preview": "vite preview"    // Previews the production build
   },
   "dependencies": {
     "@gsap/react": "^2.1.1",
