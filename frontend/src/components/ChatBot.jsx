@@ -43,7 +43,7 @@ const ChatBot = () => {
 
     try {
       // Send input to backend
-      const response = await axios.post('http://localhost:4000/bot/bot-res', {
+      const response = await axios.post('https://uber-clone-backend-t531.onrender.com/bot/bot-res', {
         prompt: input,
       });
 
