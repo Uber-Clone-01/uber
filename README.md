@@ -2,8 +2,6 @@
 
 This project is a fully functional Uber-like application built with modern web technologies. It includes features such as user authentication, ride booking, real-time updates via sockets, a driver/captain dashboard, and advanced features like ride history, earnings tracking, and a chatbot for user assistance.  
 
-🔗 **Deployed Project**: [Uber Clone Live](https://earnest-twilight-45dd13.netlify.app)
-
 ---
 
 ## 🚀 Features
