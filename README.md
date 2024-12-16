@@ -1,94 +1,98 @@
 # Uber Clone
 
-This project is a fully functional Uber-like application built with modern web technologies. It includes features such as user authentication, ride booking, real-time updates via sockets, and a driver/captain dashboard. Below is an overview of the project setup, features, and installation instructions.
+This project is a fully functional Uber-like application built with modern web technologies. It includes features such as user authentication, ride booking, real-time updates via sockets, a driver/captain dashboard, and advanced features like ride history, earnings tracking, and a chatbot for user assistance.  
+
+🔗 **Deployed Project**: [Uber Clone Live](https://earnest-twilight-45dd13.netlify.app)
 
 ---
 
 ## 🚀 Features
 
 ### User Features
-- **User Authentication:** Sign up, log in, and log out.
-- **Location Search:** Autocomplete for pick-up and destination addresses.
-- **Ride Booking:** Choose vehicle type and confirm rides.
-- **Live Tracking:** Real-time ride updates and location tracking.
-- **Chat Support:** Integrated chatbot for user assistance.
+- **User Authentication**: Sign up, log in, and log out.
+- **Location Search**: Autocomplete for pick-up and destination addresses.
+- **Ride Booking**: Choose vehicle type and confirm rides.
+- **Ride History**: View past rides with details such as fare, distance, and date.
+- **Live Tracking**: Real-time ride updates and location tracking.
+- **Chat Support**: Integrated chatbot powered by **Gemini AI**, trained to provide specific answers to user queries.
 
 ### Captain (Driver) Features
-- **Captain Authentication:** Log in and log out.
-- **Ride Management:** View, accept, and start rides.
-- **Live Tracking:** Update ride status and send location updates to the server.
+- **Captain Authentication**: Log in and log out.
+- **Ride Management**: View, accept, and start rides.
+- **Earnings Tracking**: Monitor completed rides and track total earnings.
+- **Profile Settings**: Update personal details, availability, and vehicle information.
+- **Live Tracking**: Update ride status and send location updates to the server.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **React.js:** Component-based user interface.
-- **Tailwind CSS:** Styling framework.
-- **GSAP:** Animations.
-- **Socket.IO:** Real-time communication for ride status and tracking.
-- **React Router:** Navigation between pages.
+- **React.js**: Component-based user interface.
+- **Tailwind CSS**: Styling framework.
+- **GSAP**: Smooth animations.
+- **Socket.IO**: Real-time communication for ride status and tracking.
+- **React Router**: Navigation between pages.
 
 ### Backend
-- **Node.js & Express:** Server-side logic and API endpoints.
-- **MongoDB:** Database for storing user, ride, and vehicle information.
-- **JWT:** Token-based authentication.
-- **Socket.IO:** Real-time ride tracking and updates.
+- **Node.js & Express**: Server-side logic and API endpoints.
+- **MongoDB**: Database for storing user, ride, and vehicle information.
+- **JWT**: Token-based authentication.
+- **Socket.IO**: Real-time ride tracking and updates.
+- **Gemini AI**: Custom-trained chatbot for user and captain assistance.
 
 ---
 
 ## ⚙️ Getting Started
 
 ### Prerequisites
-
 Ensure you have the following installed on your machine:
-- Node.js
-- npm or yarn
-- MongoDB
+- **Node.js**
+- **npm** or **yarn**
+- **MongoDB**
 
 ### Installation
-
-1. **Clone the repository:**
+1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/uber-clone.git
    cd uber-clone
    ```
-
-2. **Install dependencies for both frontend and backend:**
+2. Install dependencies for both frontend and backend:
    ```bash
+   # Frontend
    cd frontend
    npm install
+
+   # Backend
    cd backend
    npm install
    ```
 
-3. **Set up environment variables:**
-   - Create a `.env` file in the `backend` directory.
-   - Add the following:
+3. Set up environment variables:
+   - **Backend**: Create a `.env` file in the `backend` directory and add:
      ```env
      MONGO_URI=your-mongodb-uri
      JWT_SECRET=your-secret-key
      BASE_URL=http://localhost:5000
      ```
-   - Create a `.env` file in the `frontend` directory.
-   - Add the following:
+   - **Frontend**: Create a `.env` file in the `frontend` directory and add:
      ```env
      VITE_BASE_URL=http://localhost:4000
      ```
 
-4. **Start the development servers:**
-   - For the backend:
+4. Start the development servers:
+   - **Backend**:
      ```bash
      cd backend
      npx nodemon
      ```
-   - For the frontend:
+   - **Frontend**:
      ```bash
      cd frontend
      npm run dev
      ```
 
-5. **Open your browser and navigate to:**
+5. Open your browser and navigate to:
    ```
    http://localhost:5173
    ```
@@ -98,15 +102,15 @@ Ensure you have the following installed on your machine:
 ## 📂 Folder Structure
 
 ### Frontend
-- **`src/components`**: Reusable React components (e.g., `LocationSearchPanel`, `VehiclePanel`, `ConfirmRide`).
-- **`src/pages`**: Main application pages (e.g., `Home`, `Login`, `CaptainDashboard`).
-- **`src/context`**: Context API setup for user and captain state.
+- `src/components`: Reusable React components (e.g., `LocationSearchPanel`, `VehiclePanel`, `ConfirmRide`).
+- `src/pages`: Main application pages (e.g., `Home`, `Login`, `CaptainDashboard`).
+- `src/context`: Context API setup for user and captain state.
 
 ### Backend
-- **`routes/`**: Express routes for user, captain, and ride management.
-- **`models/`**: Mongoose schemas for User, Ride, and Vehicle.
-- **`controllers/`**: Business logic for handling API requests.
-- **`middlewares/`**: Authentication and error handling.
+- `routes/`: Express routes for user, captain, and ride management.
+- `models/`: Mongoose schemas for `User`, `Ride`, and `Vehicle`.
+- `controllers/`: Business logic for handling API requests.
+- `middlewares/`: Authentication and error handling.
 
 ---
 
@@ -130,8 +134,7 @@ Ensure you have the following installed on your machine:
 ---
 
 ## ⚡ Real-Time Features
-
-- **Socket.IO Integration:**
+- **Socket.IO Integration**:
   - Join rooms for user and captain.
   - Emit events for ride confirmation, status updates, and live location tracking.
 
@@ -150,7 +153,6 @@ Ensure you have the following installed on your machine:
 ---
 
 ## 🌟 Future Enhancements
-
 - Add payment gateway integration.
 - Implement push notifications.
 - Enhance error handling and logging.
@@ -158,9 +160,7 @@ Ensure you have the following installed on your machine:
 
 ---
 
-
 ## 🤝 Contributing
-
 Contributions are welcome! Please follow these steps:
 1. Fork the repository.
 2. Create a feature branch.
@@ -170,6 +170,5 @@ Contributions are welcome! Please follow these steps:
 ---
 
 ## 🙏 Acknowledgments
-
 This project is inspired by Uber and is intended for educational purposes only.
-
+```
