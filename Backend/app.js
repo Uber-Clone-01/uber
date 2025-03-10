@@ -16,7 +16,7 @@ connectToDb();
 
 const _dirname = path.resolve();
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://uber-1-7hyb.onrender.com",
   credentials: true
 };
 app.use(cors(corsOptions));
