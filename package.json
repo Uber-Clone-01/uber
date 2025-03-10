@@ -4,8 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js", 
-    "dev": "npx nodemon server.js"  
+    "dev": "nodemon Backend/server.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "nodemon Backend/server.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.11.0",
     "mongoose": "^8.8.3",
+    "nodemon": "^3.1.9",
     "socket.io": "^4.8.1"
   }
 }

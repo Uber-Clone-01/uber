@@ -11,21 +11,28 @@ const mapsRoutes = require('./routes/maps.routes');
 const rideRoutes = require('./routes/ride.routes');
 const geminiRoutes = require('./routes/gemini.routes');
 const ratingRoutes = require('./routes/rating.routes');
-
+const path = require('path');
 connectToDb();
-app.use(cors());
+
+const _dirname = path.resolve();
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-    res.send('Hello world');
-});
+
 app.use('/users',userRoutes);
 app.use('/captains',captainRoutes);
 app.use('/maps',mapsRoutes);
 app.use('/rides',rideRoutes);
 app.use('/bot',geminiRoutes);
 app.use('/ratings', ratingRoutes);
-
+app.use(express.static(path.join(_dirname, 'frontend/dist')));
+app.get('*', (_, res) => {
+    res.sendFile(path.resolve(_dirname, "frontend","dist","index.html"));
+  })
 module.exports =app;
